@@ -1,3 +1,4 @@
+import { BaseError } from "../../../shared/BaseError"
 import { UsersRepository } from "../repositories/UserRepository"
 import { CreateUserUseCase } from "./CreateUserUseCase"
 
@@ -16,9 +17,15 @@ const mockUser = {
 }
 
 describe('Create User Use Case', () => {
-    it('should be able create user', () => {
+    it('should be able create user',  async () => {
         const { sut } = makeSut()
-        const result = sut.perform(mockUser)
+        const result = await sut.perform(mockUser)
         expect(result).toHaveProperty('id')
+    })
+
+    it('should not be able create user with same email', async () => {
+        const { sut } = makeSut()
+        await sut.perform(mockUser)
+        await expect(sut.perform(mockUser)).rejects.toEqual(new BaseError('User already exists.'))
     })
 })
