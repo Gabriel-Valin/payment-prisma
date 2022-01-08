@@ -15,7 +15,8 @@ app.get('/prisma', async (req: Request, res: Response) => {
     const user = await prisma.user.create({
         data: {
             name: 'Gabriel',
-            email: 'gabrielvalincontato@gmail.com'
+            email: 'gabrielvalincontato@gmail.com',
+            password: 'any_pass'
         }
     })
 
