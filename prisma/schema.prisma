@@ -11,10 +11,26 @@ datasource db {
 }
 
 model User {
+  id        String    @id @default(uuid())
+  name      String
+  password  String
+  email     String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  clients   Clients[]
+
+  @@map("users")
+}
+
+model Clients {
   id        String   @id @default(uuid())
   name      String
   email     String   @unique
-  password  String   
+  phone     String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@map("clients")
 }
