@@ -1,24 +1,12 @@
 import express, { Response, Request } from 'express'
 import cors from 'cors'
-import { PrismaClient } from '@prisma/client'
+import { router } from './shared/http'
 
 export const app = express()
 app.use(express.json())
 app.use(cors())
-const prisma = new PrismaClient()
+app.use('/api', router)
 
-app.get("/health-check", (req: Request, res: Response) => {
+app.get("/", (req: Request, res: Response) => {
     res.json({ status: 'live' })
-})
-
-app.get('/prisma', async (req: Request, res: Response) => {
-    const user = await prisma.user.create({
-        data: {
-            name: 'Gabriel',
-            email: 'gabrielvalincontato@gmail.com',
-            password: 'any_pass'
-        }
-    })
-
-    res.json({ user })
 })
