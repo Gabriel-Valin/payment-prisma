@@ -1,6 +1,6 @@
-import { BaseError } from "../../../shared/BaseError"
-import { BcryptAdapter } from "../../../shared/infra/cryptography/Bcrypt"
-import { UsersRepository } from "../repositories/UserRepository"
+import { BaseError } from "../../../../shared/BaseError"
+import { BcryptAdapter } from "../../../../shared/infra/cryptography/Bcrypt"
+import { UsersRepository } from "../../repositories/UserRepository"
 import { CreateUserUseCase } from "./CreateUserUseCase"
 
 

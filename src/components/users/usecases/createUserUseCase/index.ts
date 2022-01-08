@@ -1,5 +1,5 @@
-import { BcryptAdapter } from "../../../shared/infra/cryptography/Bcrypt";
-import { PrismaRepository } from "../repositories/PrismaRepository";
+import { BcryptAdapter } from "../../../../shared/infra/cryptography/Bcrypt";
+import { PrismaRepository } from "../../repositories/PrismaRepository";
 import { CreateUserController } from "./CreateUserController";
 import { CreateUserUseCase } from "./CreateUserUseCase";
 

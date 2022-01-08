@@ -1,8 +1,8 @@
-import { BaseError } from "../../../shared/BaseError";
-import { User } from "../entities/User";
-import { Cryptography } from "../types/hasher/Cryptography";
-import { ContractUsersRepository } from "../types/repositories/UsersRepository";
-import { TypeUser } from "../types/requests/CreateUser";
+import { BaseError } from "../../../../shared/BaseError";
+import { User } from "../../entities/User";
+import { Cryptography } from "../../types/hasher/Cryptography";
+import { ContractUsersRepository } from "../../types/repositories/UsersRepository";
+import { TypeUser } from "../../types/requests/CreateUser";
 
 export class CreateUserUseCase {
     constructor (
