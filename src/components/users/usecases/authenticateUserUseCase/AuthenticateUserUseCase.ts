@@ -26,11 +26,12 @@ export class AuthenticateUserUseCase {
         }
 
         const token = this.jwtAdapter.encrypt(userAlreadyExists.id)
-
+        delete userAlreadyExists.password
+        
         const userAuthenticated = {
             token,
             user: {
-                ...userAlreadyExists, 
+                ...userAlreadyExists,
             }
         }
 
