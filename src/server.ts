@@ -1,4 +1,5 @@
 import 'reflect-metadata'
+import './shared/infra/container'
 import 'dotenv/config'
 import { app } from './app'
 

@@ -5,7 +5,7 @@ export class JwtAdapter implements TokenizationAdapter {
     constructor (private readonly secret: string) {}
 
     decrypt (ciphertext: string): Promise<string> {
-        return jwt.verify(ciphertext, this.secret) as any
+        return jwt.verify(ciphertext, process.env.JWT_SECRET) as any
     }
 
     encrypt (plaintext: string): string {
