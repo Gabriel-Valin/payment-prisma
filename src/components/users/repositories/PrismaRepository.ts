@@ -8,7 +8,7 @@ export class PrismaRepository implements ContractUsersRepository {
     constructor () {
         this.client = new PrismaClient()
     }
-
+    
     public async createUser({ email, password, name }: TypeUser): Promise<User> {
         const user = await this.client.user.create({
             data: {
@@ -28,5 +28,15 @@ export class PrismaRepository implements ContractUsersRepository {
             }
         })
         return !!user
+    }
+
+    public async getUserInfoByEmail(email: string): Promise<User> {
+        const user = await this.client.user.findFirst({
+            where: {
+                email
+            }
+        })
+
+        return user
     }
 }
