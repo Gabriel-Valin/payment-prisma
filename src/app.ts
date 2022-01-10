@@ -1,8 +1,10 @@
+import 'reflect-metadata'
+import './shared/infra/container'
+import 'dotenv/config'
 import 'express-async-errors'
 import express, { Response, Request, NextFunction } from 'express'
 import cors from 'cors'
 import { router } from './shared/http'
-import { BaseError } from './shared/BaseError'
 import applicationErrorMiddleware from './shared/http/middlewares/ApplicationError'
 
 export const app = express()

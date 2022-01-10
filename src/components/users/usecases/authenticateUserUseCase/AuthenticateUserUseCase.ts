@@ -1,14 +1,18 @@
+import { inject, injectable } from "tsyringe"
 import { BaseError } from "../../../../shared/BaseError"
 import { Cryptography } from "../../types/hasher/Cryptography"
 import { TokenizationAdapter } from "../../types/hasher/Jwt"
 import { ContractUsersRepository } from "../../types/repositories/UsersRepository"
 import { TypeUser } from "../../types/requests/CreateUser"
 import { UserAuthenticated } from "../../types/requests/UserAuthenticate"
-
+@injectable()
 export class AuthenticateUserUseCase {
     constructor (
+        @inject('PrismaClient')
         private readonly userRepository: ContractUsersRepository,
+        @inject('TokenJwtAdapter')
         private readonly jwtAdapter: TokenizationAdapter,
+        @inject('BcryptAdapter')
         private readonly passwordHasher: Cryptography
     ) {}
 
