@@ -1,3 +1,4 @@
+import { BaseError } from "../../../shared/BaseError"
 import { BcryptAdapter } from "../../../shared/infra/cryptography/Bcrypt"
 import { JwtAdapter } from "../../../shared/infra/cryptography/Jwt"
 import { PrismaRepository } from "../../users/repositories/PrismaRepository"
@@ -43,5 +44,12 @@ describe('Create Client for User', () => {
         const { id } = newUser
         const result = await sut.perform({ userId: id, name: mockClient.name, email: mockClient.email, phone: mockClient.phone })
         expect(result).toHaveProperty('id')
+    })
+
+    it('should not be able create a new client with same email', async () => {
+        const newUser = await createUser.perform(mockUser)
+        const { id } = newUser
+        const result = await sut.perform({ userId: id, name: mockClient.name, email: mockClient.email, phone: mockClient.phone })
+        expect(result).rejects.toEqual(new BaseError('Already client with this email', 401))
     })
 })
