@@ -9,5 +9,3 @@ export class CreateUserController {
         return response.status(201).json(useCasePerformance)
     } 
 }
-
-// await this.createUserUseCase.perform({ email, password, name })

@@ -1,5 +1,4 @@
 import { Request, Response, Router } from "express";
-// import { makeAuthenticateUserController } from "../../components/users/usecases/authenticateUserUseCase";
 import { body, validationResult } from 'express-validator';
 import { AuthenticateUserController } from "../../components/users/usecases/authenticateUserUseCase/AuthenticateUserController";
 import { CreateUserController } from "../../components/users/usecases/createUserUseCase/CreateUserController";
