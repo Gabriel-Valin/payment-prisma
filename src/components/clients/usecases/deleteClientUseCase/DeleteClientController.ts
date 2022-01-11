@@ -3,10 +3,11 @@ import { container } from "tsyringe";
 import { DeleteClientUseCase } from "./DeleteClientUseCase";
 
 export class DeleteClientController {
-    public async execute (request: Request, response: Response) {
+    public async execute (request: Request, response: Response): Promise<Response> {
         const { clientId } = request.params
+        console.log(request)
         const useCaseContainer = container.resolve(DeleteClientUseCase)
         const useCasePerformance = useCaseContainer.perform(clientId)
-        response.status(201).json(useCasePerformance)
+        return response.status(202).json(useCasePerformance)
     }
 }

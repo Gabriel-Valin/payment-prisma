@@ -1,5 +1,5 @@
 export type TypeClient = {
-    userId: string
+    userId?: string
     name: string
     email: string
     phone: string
