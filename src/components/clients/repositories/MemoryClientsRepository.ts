@@ -4,6 +4,17 @@ import { TypeClient } from "../types/requests/TypeClient";
 
 export class ClientsRepository implements ContractClientsRepository {
     private clients: Client[] = []
+
+    public async deleteClient(clientId: string): Promise<boolean> {
+        const client = this.clients.filter(user => user.id !== clientId)
+        return !!client
+    }
+
+    public async findClientById (clientId: string): Promise<Client> {
+        const client = this.clients.find(user => user.id === clientId)
+        return client
+    }
+
     public async findClientByEmail (email: string): Promise<Client> {
         const client = this.clients.find(user => user.email === email)
         return client

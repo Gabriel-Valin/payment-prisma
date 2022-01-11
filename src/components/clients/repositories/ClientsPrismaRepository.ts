@@ -4,6 +4,25 @@ import { ContractClientsRepository } from "../types/repositories/ClientsReposito
 import { TypeClient } from "../types/requests/TypeClient"
 import { prisma } from '../../../shared/infra/database'
 export class ClientsPrismaRepository implements ContractClientsRepository {
+    public async findClientById (clientId: string): Promise<Client> {
+        const clientFound = await prisma.clients.findFirst({
+            where: {
+                id: clientId
+            }
+        })
+
+        return clientFound
+    }
+
+    public async deleteClient (clientId: string): Promise<boolean> {
+        const wasDeleted = await prisma.clients.delete({
+            where: {
+                id: clientId
+            }
+        })
+
+        return !!wasDeleted
+    }
     public async getClientExists(email: string): Promise<boolean> {
         const clientFound = await prisma.clients.findFirst({
             where: {
