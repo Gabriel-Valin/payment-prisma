@@ -7,4 +7,5 @@ export interface ContractClientsRepository {
     createNewClient (data: TypeClient): Promise<Client>
     findClientById (clientId: string): Promise<Client>
     deleteClient (clientId: string): Promise<boolean>
+    updateClient ({ clientId, client }): Promise<Client>
 }

@@ -4,8 +4,8 @@ export class Client {
     email: string
     name: string
     phone: string
-    createdAt: Date
-    updatedAt: Date
+    createdAt?: Date
+    updatedAt?: Date
 
     constructor () {
         if (!this.createdAt || !this.updatedAt) {

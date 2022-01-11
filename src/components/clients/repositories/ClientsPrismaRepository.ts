@@ -4,6 +4,9 @@ import { ContractClientsRepository } from "../types/repositories/ClientsReposito
 import { TypeClient } from "../types/requests/TypeClient"
 import { prisma } from '../../../shared/infra/database'
 export class ClientsPrismaRepository implements ContractClientsRepository {
+    updateClient({ clientId, client }: { clientId: any; client: any }): Promise<Client> {
+        throw new Error("Method not implemented.")
+    }
     public async findClientById (clientId: string): Promise<Client> {
         const clientFound = await prisma.clients.findFirst({
             where: {
