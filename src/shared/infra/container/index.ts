@@ -1,7 +1,7 @@
 import { container } from "tsyringe";
-import { ClientsPrismaRepository } from "../../../components/clients/repositories/ClientsRepository";
+import { ClientsPrismaRepository } from "../../../components/clients/repositories/ClientsPrismaRepository";
 import { ContractClientsRepository } from "../../../components/clients/types/repositories/ClientsRepository";
-import { PrismaRepository } from "../../../components/users/repositories/PrismaRepository";
+import { PrismaRepository } from "../../../components/users/repositories/UserPrismaRepository";
 import { Cryptography } from "../../../components/users/types/hasher/Cryptography";
 import { TokenizationAdapter } from "../../../components/users/types/hasher/Jwt";
 import { ContractUsersRepository } from "../../../components/users/types/repositories/UsersRepository";

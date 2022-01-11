@@ -1,5 +1,5 @@
 import { BcryptAdapter } from "../../../../shared/infra/cryptography/Bcrypt"
-import { UsersRepository } from "../../repositories/UserRepository"
+import { UsersRepository } from "../../repositories/MemoryUsersRepository"
 import { Cryptography } from "../../types/hasher/Cryptography"
 import { ContractUsersRepository } from "../../types/repositories/UsersRepository"
 import { CreateUserUseCase } from "../createUserUseCase/CreateUserUseCase"
@@ -42,9 +42,8 @@ describe('Authenticate User', () => {
 
     // VERIFY THIS TEST E WHY HAVE ERROR
 
-    // it('should not able auth with incorrect password', async () => {
-    //     const userCreated = await createUser.perform(mockUser)
-    //     const result = await sut.perform({ email: userCreated.email, password: 'a' })
-    //     expect(result).rejects.toEqual(new BaseError('Password or email is invalid', 401))
-    // })
+    it('should not able auth with incorrect password', async () => {
+        const userCreated = await createUser.perform(mockUser)
+        await expect(sut.perform({ email: userCreated.email, password: 'a' })).rejects.toBeInstanceOf(BaseError)
+    })
 })
