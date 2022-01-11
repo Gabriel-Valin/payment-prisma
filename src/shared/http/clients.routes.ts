@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { CreateClientController } from "../../components/clients/createClientUseCase/CreateClientController";
+import { CreateClientController } from "../../components/clients/usecases/createClientUseCase/CreateClientController";
 
 const createClientController = new CreateClientController()
 

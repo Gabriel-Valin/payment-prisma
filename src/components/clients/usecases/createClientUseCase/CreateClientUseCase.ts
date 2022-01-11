@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe"
-import { BaseError } from "../../../shared/BaseError"
-import { Client } from "../entities/Client"
-import { ContractClientsRepository } from "../types/repositories/ClientsRepository"
-import { TypeClient } from "../types/requests/TypeClient"
+import { BaseError } from "../../../../shared/BaseError"
+import { Client } from "../../entities/Client"
+import { ContractClientsRepository } from "../../types/repositories/ClientsRepository"
+import { TypeClient } from "../../types/requests/TypeClient"
 
 @injectable()
 export class CreateClientUseCase {

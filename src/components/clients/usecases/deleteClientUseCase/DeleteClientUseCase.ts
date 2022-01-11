@@ -1,8 +1,9 @@
-import { inject } from "tsyringe";
-import { BaseError } from "../../../shared/BaseError";
-import { DeletedUser } from "../../users/types/requests/DeleteUser";
-import { ContractClientsRepository } from "../types/repositories/ClientsRepository";
+import { inject, injectable } from "tsyringe";
+import { BaseError } from "../../../../shared/BaseError";
+import { DeletedUser } from "../../../users/types/requests/DeleteUser";
+import { ContractClientsRepository } from "../../types/repositories/ClientsRepository";
 
+@injectable()
 export class DeleteClientUseCase {
     constructor (
         @inject('ClientsPrismaClient')
