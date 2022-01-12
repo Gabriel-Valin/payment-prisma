@@ -2,5 +2,7 @@ import { TypeClient } from "./TypeClient";
 
 export type TypeUpdateClient = {
     clientId: string
-    client: TypeClient
+    email: string
+    name: string
+    phone: string
 }

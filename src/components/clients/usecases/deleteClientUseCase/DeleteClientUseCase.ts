@@ -11,7 +11,6 @@ export class DeleteClientUseCase {
     ) {}
     public async perform (clientId: string): Promise<DeletedUser> {
         const clientAlreadyExists = await this.clientRepository.findClientById(clientId)
-        console.log(clientAlreadyExists)
         if (!clientAlreadyExists) {
             throw new BaseError('Client not exists.', 401)
         }

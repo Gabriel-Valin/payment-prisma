@@ -85,8 +85,8 @@ BRH:4
 end_of_record
 TN:
 SF:src/components/clients/usecases/updateClientUseCase/UpdateClientUseCase.ts
-FN:7,UpdateClientUseCase
-FN:11,perform
+FN:8,UpdateClientUseCase
+FN:12,perform
 FNF:2
 FNH:2
 FNDA:1,UpdateClientUseCase
@@ -107,10 +107,11 @@ DA:13,1
 DA:14,1
 DA:15,1
 DA:16,1
-LF:16
-LH:16
-BRDA:7,0,0,1
-BRDA:11,1,0,1
+DA:17,1
+LF:17
+LH:17
+BRDA:8,0,0,1
+BRDA:12,1,0,1
 BRF:2
 BRH:2
 end_of_record

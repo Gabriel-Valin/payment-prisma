@@ -6,9 +6,16 @@ import { TypeUpdateClient } from "../types/requests/TypeUpdateClient";
 export class ClientsRepository implements ContractClientsRepository {
     private clients: Client[] = []
 
-    public async updateClient ({ clientId, client }: TypeUpdateClient): Promise<Client> {
+    public async findClientsByUserId (userId: string): Promise<Client[]> {
+        const client = this.clients.filter(client => client.userId === userId)
+        return client
+    }
+
+    public async updateClient ({ clientId, name, email, phone }: TypeUpdateClient): Promise<Client> {
         let clientToUpdate = this.clients.findIndex(user => user.id === clientId)
+        const client = { name, email, phone }
         this.clients[clientToUpdate] = client
+        this.clients[clientToUpdate].id = 'uuid'
         return client
     }
 

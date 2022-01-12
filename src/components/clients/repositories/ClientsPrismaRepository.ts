@@ -3,9 +3,30 @@ import { Client } from "../entities/Client"
 import { ContractClientsRepository } from "../types/repositories/ClientsRepository"
 import { TypeClient } from "../types/requests/TypeClient"
 import { prisma } from '../../../shared/infra/database'
+import { TypeUpdateClient } from "../types/requests/TypeUpdateClient"
 export class ClientsPrismaRepository implements ContractClientsRepository {
-    updateClient({ clientId, client }: { clientId: any; client: any }): Promise<Client> {
-        throw new Error("Method not implemented.")
+    public async findClientsByUserId (userId: string): Promise<Client[]> {
+        const clients = await prisma.clients.findMany({
+            where: {
+                id: userId
+            }
+        })
+
+        return clients
+    }
+    public async updateClient ({ clientId, name, email, phone }: TypeUpdateClient): Promise<Client> {
+        const clientUpdate = await prisma.clients.update({
+            where: {
+                id: clientId
+            },
+            data: {
+                name,
+                email,
+                phone
+            }
+        })
+
+        return clientUpdate
     }
     public async findClientById (clientId: string): Promise<Client> {
         const clientFound = await prisma.clients.findFirst({
@@ -47,7 +68,7 @@ export class ClientsPrismaRepository implements ContractClientsRepository {
     }
     
     public async createNewClient ({ userId, email, name, phone }: TypeClient): Promise<Client> {
-        const user = await prisma.clients.create({
+        const client = await prisma.clients.create({
             data: {
                 userId,
                 email,
@@ -56,6 +77,6 @@ export class ClientsPrismaRepository implements ContractClientsRepository {
             }
         })
 
-        return user
+        return client
     }
 }

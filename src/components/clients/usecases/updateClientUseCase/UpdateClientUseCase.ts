@@ -9,9 +9,9 @@ export class UpdateClientUseCase {
         @inject('ClientsPrismaClient')
         private readonly clientsRepository: ContractClientsRepository
     ) {}
-    public async perform ({ clientId, client }: TypeUpdateClient): Promise<Client> {
+    public async perform ({ clientId, name, email, phone }: TypeUpdateClient): Promise<Client> {
         const clientFound = await this.clientsRepository.findClientById(clientId)
-        const result = await this.clientsRepository.updateClient({ clientId, client })
+        const result = await this.clientsRepository.updateClient({ clientId, name, email, phone })
         return result
     }
 }

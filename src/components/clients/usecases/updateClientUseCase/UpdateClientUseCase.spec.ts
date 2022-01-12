@@ -18,7 +18,7 @@ describe(('Update client by clientId'), () => {
     })
     it('should be able update client by clientId', async () => {
         const newClient = await clientsRepository.createNewClient(mockClient)
-        const result = await sut.perform({ clientId: newClient.id, client: newClient })
+        const result = await sut.perform({ clientId: newClient.id, name: newClient.name, email: newClient.email, phone: newClient.phone })
         expect(result.name).toEqual(mockClient.name)
         expect(result).toHaveProperty('id')
     })
