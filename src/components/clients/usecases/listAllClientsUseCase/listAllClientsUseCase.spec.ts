@@ -1,12 +1,8 @@
-import { inject } from "tsyringe"
-import { Client } from "../../entities/Client"
 import { ClientsRepository } from "../../repositories/MemoryClientsRepository"
 import { ListAllClientsUseCase } from "./listAllClientsUseCase"
 
 let clientsRepository: ClientsRepository
 let sut: ListAllClientsUseCase
-
-
 
 let mockClient = {
     name: 'New client1',

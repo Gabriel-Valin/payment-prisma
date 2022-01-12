@@ -5,7 +5,6 @@ import { DeleteClientUseCase } from "./DeleteClientUseCase";
 export class DeleteClientController {
     public async execute (request: Request, response: Response): Promise<Response> {
         const { clientId } = request.params
-        console.log(request)
         const useCaseContainer = container.resolve(DeleteClientUseCase)
         const useCasePerformance = useCaseContainer.perform(clientId)
         return response.status(202).json(useCasePerformance)
