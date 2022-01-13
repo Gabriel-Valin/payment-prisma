@@ -6,7 +6,7 @@ import { ClientsRepository } from "../../repositories/MemoryClientsRepository"
 @injectable()
 export class ListIndividualClientUseCase {
     constructor (
-        @inject('ClientPrismaClient')
+        @inject('ClientsPrismaClient')
         private readonly clientsRepository: ClientsRepository
     ) {}
     public async perform (clientId: string): Promise<Client> {

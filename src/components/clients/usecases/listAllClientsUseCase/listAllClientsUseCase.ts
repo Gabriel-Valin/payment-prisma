@@ -8,7 +8,7 @@ export class ListAllClientsUseCase {
         @inject('ClientsPrismaClient')
         private readonly clientsRepository: ClientsRepository
     ) {}
-    public async perform (userId: string): Promise<Client[]> {
+    public async perform (userId: string): Promise<any> {
         const clients = await this.clientsRepository.findClientsByUserId(userId)
         return clients
     }

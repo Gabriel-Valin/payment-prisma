@@ -8,7 +8,7 @@ export class ClientsPrismaRepository implements ContractClientsRepository {
     public async findClientsByUserId (userId: string): Promise<Client[]> {
         const clients = await prisma.clients.findMany({
             where: {
-                id: userId
+                userId
             }
         })
 

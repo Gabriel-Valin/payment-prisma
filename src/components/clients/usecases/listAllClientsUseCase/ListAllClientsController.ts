@@ -7,6 +7,6 @@ export class ListAllClientsController {
         const { userId } = request.params
         const useCaseContainer = container.resolve(ListAllClientsUseCase)
         const useCasePerformance = await useCaseContainer.perform(userId)
-        return response.status(200).json(useCasePerformance)
+        return response.status(201).json({ users: useCasePerformance })
     }
 }
