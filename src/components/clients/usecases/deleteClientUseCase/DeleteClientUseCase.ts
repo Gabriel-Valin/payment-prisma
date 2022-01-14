@@ -15,11 +15,7 @@ export class DeleteClientUseCase {
             throw new BaseError('Client not exists.', 401)
         }
 
-        const wasDeleted = await this.clientRepository.deleteClient(clientId)
-
-        if (!wasDeleted) {
-            throw new BaseError('Error in delete user method.', 500)
-        }
+        await this.clientRepository.deleteClient(clientId)
 
         return {
             delete: true,
