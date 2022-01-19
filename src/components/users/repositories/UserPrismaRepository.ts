@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client"
 import { User } from "../entities/User"
 import { ContractUsersRepository } from "../types/repositories/UsersRepository"
 import { TypeUser } from "../types/requests/CreateUser"
@@ -33,5 +32,14 @@ export class PrismaRepository implements ContractUsersRepository {
         })
 
         return user
+    }
+
+    public async createRefreshToken(userId: string): Promise<void> {
+        await prisma.refreshToken.create({
+            data: {
+                userId,
+                expiresIn: 15 * 60 * 60
+            }
+        })
     }
 }
