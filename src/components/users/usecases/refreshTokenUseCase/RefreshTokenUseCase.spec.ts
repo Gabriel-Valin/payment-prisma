@@ -1,63 +1,8 @@
 import { BaseError } from "../../../../shared/BaseError"
 import { JwtAdapter } from "../../../../shared/infra/cryptography/Jwt"
-import { User } from "../../entities/User"
-import { TokenizationAdapter } from "../../types/hasher/Jwt"
-import { UserAuthenticated } from "../../types/requests/UserAuthenticate"
-
-interface ContractRefreshTokenRepository {
-    createRefreshToken (userId: string): Promise<RefreshToken>
-    findRefreshTokenByUserId (userId: string): Promise<Boolean>
-}
-
-export class RefreshToken {
-    id: string
-    userId: Pick<User, 'id'>
-    expiresIn: number
-}
-
-export type TypeRefreshToken = {
-    refreshToken: {
-        userId: Pick<User, 'id'>
-        expiresIn: number
-    }
-    token: string
-}
-
-export class RefreshTokenRepository implements ContractRefreshTokenRepository {
-    private refreshTokens: RefreshToken[] = []
-    
-    public async createRefreshToken(userId: string): Promise<RefreshToken> {
-        const refreshToken = new RefreshToken()
-        const refreshTokenUser = Object.assign(refreshToken, { id: 'uuid', userId, expiresIn: 15*60*60 })
-        this.refreshTokens.push(refreshTokenUser)
-        return refreshTokenUser
-    }
-
-    public async findRefreshTokenByUserId(userId: string): Promise<Boolean> {
-        const refreshTokenFound = this.refreshTokens.some(refreshToken => refreshToken.userId === userId)
-        return refreshTokenFound
-    }
-}
-
-class RefreshTokenUseCase {
-    constructor (
-        private readonly jwtAdapter: TokenizationAdapter,
-        private readonly refreshTokenRepository: ContractRefreshTokenRepository
-    ) {}
-    public async perform (userId: string): Promise<TypeRefreshToken>{
-        const refreshTokenFound = await this.refreshTokenRepository.findRefreshTokenByUserId(userId)
-
-        if (!refreshTokenFound) {
-            throw new BaseError('Invalid refresh token', 401)   
-        }
-
-        const refreshToken = await this.refreshTokenRepository.createRefreshToken(userId)
-        const token = this.jwtAdapter.encrypt(userId)
-
-        return { token, refreshToken } 
-    
-    }
-}
+import { RefreshTokenRepository } from "../../repositories/MemoryRefreshTokenRepository"
+import { ContractRefreshTokenRepository } from "../../types/repositories/RefreshTokenRepository"
+import { RefreshTokenUseCase } from "./RefreshTokenUseCase"
 
 let jwtAdapter: JwtAdapter
 let refreshTokenRepository: ContractRefreshTokenRepository
