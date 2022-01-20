@@ -2,9 +2,11 @@ import { Request, Response, Router } from "express";
 import { body, validationResult } from 'express-validator';
 import { AuthenticateUserController } from "../../components/users/usecases/authenticateUserUseCase/AuthenticateUserController";
 import { CreateUserController } from "../../components/users/usecases/createUserUseCase/CreateUserController";
+import { RefreshTokenController } from "../../components/users/usecases/refreshTokenUseCase/RefreshTokenController";
 
 const createUserController = new CreateUserController()
 const authenticateUserController = new AuthenticateUserController()
+const refreshTokenController = new RefreshTokenController()
 
 export const usersRouter = Router()
 usersRouter.post('/', 
@@ -19,3 +21,5 @@ usersRouter.post('/auth',
     body('email').isEmail().withMessage('Email inválido'),
     authenticateUserController.execute
 )
+
+usersRouter.post('/refresh-token', refreshTokenController.execute)

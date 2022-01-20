@@ -30,7 +30,18 @@ describe('Refresh Token Use Case', () => {
         expect(typeof result.token).toBe('string')
     })
 
-    it('should not be able create refresh token with invalid userId', async () => {
-        await expect(sut.perform('any_id')).rejects.toBeInstanceOf(BaseError) 
+    it('should be able delete older refresh token when new will requested', async () => {
+        await refreshTokenRepository.createRefreshToken('any_id')
+        await sut.perform('any_id')
+        await refreshTokenRepository.createRefreshToken('any_id')
+        const result = await sut.perform('any_id')
+        expect(result).toHaveProperty('token')
+        expect(result).toHaveProperty('refreshToken')
+        expect(result.refreshToken.userId).toBe('any_id')
+    })
+
+    it('should no be able create a new refreshToken with incorrect values', async () => {
+        await refreshTokenRepository.createRefreshToken('id_valid')
+        await expect(sut.perform('invalid_id')).rejects.toBeInstanceOf(BaseError)
     })
 })

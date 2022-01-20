@@ -4,6 +4,12 @@ import { ContractRefreshTokenRepository } from "../types/repositories/RefreshTok
 export class RefreshTokenRepository implements ContractRefreshTokenRepository {
     private refreshTokens: RefreshToken[] = []
     
+    public async deleteRefreshTokenFromUser (userId: string): Promise<Boolean> {
+        const refreshTokenToDelete = this.refreshTokens.filter(refreshToken => refreshToken.userId !== userId)
+
+        if (!!refreshTokenToDelete) return true
+    }
+
     public async createRefreshToken(userId: string): Promise<RefreshToken> {
         const refreshToken = new RefreshToken()
         const refreshTokenUser = Object.assign(refreshToken, { id: 'uuid', userId, expiresIn: 15*60*60 })
