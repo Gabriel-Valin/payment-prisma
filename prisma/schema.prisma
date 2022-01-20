@@ -10,6 +10,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum StatusPayment {
+  LATE
+  WAITING
+  APPROVED
+}
+
 model User {
   id        String    @id @default(uuid())
   name      String
@@ -20,25 +26,72 @@ model User {
   clients   Clients[]
 
   refreshToken RefreshToken?
+  Payments     Payments[]
+  Contracts    Contracts[]
   @@map("users")
 }
 
 model Clients {
-  id        String   @id @default(uuid())
-  name      String
-  email     String   @unique
-  phone     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
+  id                  String   @id @default(uuid())
+  name                String
+  email               String   @unique
+  identifier_document String   @unique
+  phone               String
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @default(now())
+  userId              String
+  user                User     @relation(fields: [userId], references: [id])
 
+  Payments Payments[]
   @@map("clients")
 }
 
 model RefreshToken {
-  id        String @id @default(uuid())
+  id        String   @id @default(uuid())
   expiresIn Int
-  user      User   @relation(fields: [userId], references: [id])
-  userId    String @unique
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@map("refresh_tokens")
+}
+
+model PaymentTypes {
+  id        String    @id @default(uuid())
+  type      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  Payments  Payments?
+
+  @@map("payment_types")
+}
+
+model Payments {
+  id             String       @id @default(uuid())
+  clientId       String
+  client         Clients      @relation(fields: [clientId], references: [id])
+  userId         String
+  user           User         @relation(fields: [userId], references: [id])
+  paymentTypesId String       @unique
+  paymentType    PaymentTypes @relation(fields: [paymentTypesId], references: [id])
+
+  amount      Float
+  description String
+  status      StatusPayment
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @default(now())
+
+  @@map("payments")
+}
+
+model Contracts {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  urlPDF    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@map("contracts")
 }
