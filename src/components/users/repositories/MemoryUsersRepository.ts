@@ -21,4 +21,9 @@ export class UsersRepository implements ContractUsersRepository {
         const user = this.users.find(user => user.email === email)
         return user
     }
+
+    public async findUserByid(id: string): Promise<User> {
+        const user = this.users.find(user => user.id === id)
+        return user
+    }
 }

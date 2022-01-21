@@ -28,6 +28,8 @@ model User {
   refreshToken RefreshToken?
   Payments     Payments[]
   Contracts    Contracts[]
+  UsersToken   UsersTokenRecovery?
+
   @@map("users")
 }
 
@@ -35,7 +37,6 @@ model Clients {
   id                  String   @id @default(uuid())
   name                String
   email               String   @unique
-  identifier_document String   @unique
   phone               String
   createdAt           DateTime @default(now())
   updatedAt           DateTime @default(now())
@@ -94,4 +95,16 @@ model Contracts {
   updatedAt DateTime @default(now())
 
   @@map("contracts")
+}
+
+model UsersTokenRecovery {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  token     String
+  expiresIn Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@map("users_token_recovery")
 }

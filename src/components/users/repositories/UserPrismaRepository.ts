@@ -3,6 +3,9 @@ import { ContractUsersRepository } from "../types/repositories/UsersRepository"
 import { TypeUser } from "../types/requests/CreateUser"
 import { prisma } from '../../../shared/infra/database'
 export class PrismaRepository implements ContractUsersRepository {
+    findUserByid(id: string): Promise<User> {
+        throw new Error("Method not implemented.")
+    }
     public async createUser({ email, password, name }: TypeUser): Promise<User> {
         const user = await prisma.user.create({
             data: {
