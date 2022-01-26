@@ -1,58 +1,11 @@
+import { BaseError } from "../../../../shared/BaseError"
 import { BcryptAdapter } from "../../../../shared/infra/cryptography/Bcrypt"
 import { UsersRepository } from "../../repositories/MemoryUsersRepository"
+import { UsersTokenRecoveryRepository } from "../../repositories/MemoryUsersTokenRecoveryRepository"
 import { Cryptography } from "../../types/hasher/Cryptography"
 import { ContractUsersRepository } from "../../types/repositories/UsersRepository"
-
-export type TypeUserTokenRecovery = {
-    token: string
-    userId: string
-    expirenIn: number
-}
-
-export interface ContractUsersTokenRecoveryRepository {
-    createTokenRecovery ({ token, expirenIn, userId }: TypeUserTokenRecovery): Promise<UsersTokenRecovery>
-    findByToken (token: string): Promise<UsersTokenRecovery>
-}
-
-export class UsersTokenRecovery {
-    id?: string
-    token: string
-    userId: string
-    expirenIn: number
-}
-
-export class UsersTokenRecoveryRepository implements ContractUsersTokenRecoveryRepository {
-    private usersToken: UsersTokenRecovery[] = []
-    public async createTokenRecovery({ token, expirenIn, userId }: TypeUserTokenRecovery): Promise<UsersTokenRecovery> {
-        const userToken = new UsersTokenRecovery()
-        const createUserToken = Object.assign(userToken, { id: 'uuid', token, expirenIn, userId })
-        this.usersToken.push(createUserToken)
-        return createUserToken
-    }
-
-    public async findByToken(token: string ): Promise<UsersTokenRecovery> {
-        const tokenFound = this.usersToken.find(userToken => userToken.token === token)
-        return tokenFound
-    }
-    
-}
-
-export class RecoveryPasswordUseCase {
-    constructor (
-        private readonly usersTokenRecoveryPasswordRepository: ContractUsersTokenRecoveryRepository,
-        private readonly usersRepository: ContractUsersRepository,
-        private readonly bcryptAdapter: Cryptography
-    ) {}
-    public async perform ({ token, password }): Promise<any> {
-        const userTokenIsValid = await this.usersTokenRecoveryPasswordRepository.findByToken(token)
-        const userFound = await this.usersRepository.findUserByid(userTokenIsValid.userId)
-
-        userFound.password = await this.bcryptAdapter.hash(password)
-        const userWithNewPass = await this.usersRepository.createUser(userFound)
-        return userWithNewPass
-    }
-}
-
+import { ContractUsersTokenRecoveryRepository } from "../../types/repositories/UsersTokenRepository"
+import { RecoveryPasswordUseCase } from "./RecoveryPasswordUseCase"
 
 let userRepository: ContractUsersRepository
 let tokensRecoveryRepository: ContractUsersTokenRecoveryRepository
@@ -74,5 +27,9 @@ describe('Recovery Password Use Case', () => {
         expect(typeof result.password).toBe('string')
         const hashToCompare = await bcryptAdapter.compare('any_pass', user.password)
         expect(hashToCompare).toBeTruthy()
+    })
+
+    it('should not be able change password with invalid token', async () => {
+        await expect(sut.perform({ token: 'invalid_token', password: 'any_pass' })).rejects.toBeInstanceOf(BaseError)
     })
 })
